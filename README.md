@@ -9,6 +9,7 @@ has some extra nice features, like UIDs and GIDs mapping.
 For example, if you want to execute the build task
 ```bash
 docker run                                               \
+       --rm                                              \
        -it                                               \
        -v /home/user/sourcedir/:/home/gradle/playground  \
        -e HOST_USER_ID=$(id -u)                          \
