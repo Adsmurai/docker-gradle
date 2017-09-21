@@ -8,12 +8,12 @@ has some extra nice features, like UIDs and GIDs mapping.
 
 For example, if you want to execute the build task
 ```bash
-docker run                                               \
-       --rm                                              \
-       -it                                               \
-       -v /home/user/sourcedir/:/home/gradle/playground  \
-       -e HOST_USER_ID=$(id -u)                          \
-       -e HOST_GROUP_ID=$(id -g)                         \
-       adsmurai/gradle:3.5                               \
+docker run                                                  \
+       --rm                                                 \
+       -it                                                  \
+       -v /home/user/sourcedir/:/home/apprunner/playground  \
+       -e HOST_USER_ID=$(id -u)                             \
+       -e HOST_GROUP_ID=$(id -g)                            \
+       adsmurai/gradle:4.2                                  \
        gradle build
 ```

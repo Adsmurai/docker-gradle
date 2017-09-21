@@ -11,18 +11,19 @@ FROM openjdk:8-jdk-alpine
 
 LABEL maintainer "Andrés Correa Casablanca <andreu@adsmurai.com>"
 
-ENV HOME /home/gradle
-ENV GRADLE_USER_HOME /home/gradle/.gradle
+ENV HOME /home/apprunner
+ENV GRADLE_USER_HOME /home/apprunner/.gradle
 ENV GRADLE_HOME /opt/gradle
-ENV GRADLE_VERSION 3.5
+ENV GRADLE_VERSION 4.2
 
-ARG GRADLE_DOWNLOAD_SHA256=0b7450798c190ff76b9f9a3d02e18b33d94553f708ebc08ebe09bdf99111d110
+ARG GRADLE_DOWNLOAD_SHA256=515dd63d32e55a9c05667809c5e40a947529de3054444ad274b3b75af5582eae
 
 RUN set -o errexit -o nounset                                                                                          \
 	&& echo "Installing dependencies"                                                                                  \
 	&& apk add --no-cache                                                                                              \
 		bash                                                                                                           \
 		libstdc++                                                                                                      \
+		su-exec                                                                                                        \
 	                                                                                                                   \
 	&& echo "Installing build dependencies"                                                                            \
 	&& apk add --no-cache --virtual .build-deps                                                                        \
@@ -46,29 +47,17 @@ RUN set -o errexit -o nounset                                                   
 	&& ln -s "${GRADLE_HOME}/bin/gradle" /usr/bin/gradle                                                               \
 	                                                                                                                   \
 	&& echo "Creating gradle user home"                                                                                \
-	&& mkdir -p /home/gradle/.gradle                                                                                   \
-	&& mkdir -p /home/gradle/playground                                                                                \
+	&& mkdir -p /home/apprunner/.gradle                                                                                \
+	&& mkdir -p /home/apprunner/playground                                                                             \
 	                                                                                                                   \
 	&& echo "Testing Gradle installation"                                                                              \
     && gradle --version                                                                                                \
                                                                                                                        \
-    && echo "Install Gosu"                                                                                             \
-    && GOSU_URL="https://github.com/tianon/gosu"                                                                       \
-    && GOSU_VERSION="1.10"                                                                                             \
-    && GNUPG_HOME="$(mktemp -d)"                                                                                       \
-    && wget -O /usr/local/bin/gosu "$GOSU_URL/releases/download/$GOSU_VERSION/gosu-amd64"                              \
-    && wget -O /usr/local/bin/gosu.asc "$GOSU_URL/releases/download/$GOSU_VERSION/gosu-amd64.asc"                      \
-    && gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4                 \
-    && gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu                                                \
-    && rm -r "$GNUPG_HOME" /usr/local/bin/gosu.asc                                                                     \
-    && chmod +x /usr/local/bin/gosu                                                                                    \
-    && gosu nobody true                                                                                                \
-                                                                                                                       \
     && echo "Cleaning APK cache"                                                                                       \
     && apk del .build-deps
 
-VOLUME /home/gradle/.gradle
-WORKDIR /home/gradle/playground
+VOLUME /home/apprunner/.gradle
+WORKDIR /home/apprunner/playground
 
 COPY entry_point.sh /usr/local/bin/entry_point.sh
 ENTRYPOINT ["/usr/local/bin/entry_point.sh"]
