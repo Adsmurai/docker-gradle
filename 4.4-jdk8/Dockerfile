@@ -50,9 +50,6 @@ RUN set -o errexit -o nounset                                                   
 	&& mkdir -p /home/apprunner/.gradle                                                                                \
 	&& mkdir -p /home/apprunner/playground                                                                             \
 	                                                                                                                   \
-	&& echo "Disabling Gradle daemon (because it doesn't work inside docker)"                                          \
-    && echo "org.gradle.daemon=false" > /home/apprunner/.gradle/gradle.properties                                      \
-	                                                                                                                   \
 	&& echo "Testing Gradle installation"                                                                              \
     && gradle --version                                                                                                \
                                                                                                                        \
