@@ -23,21 +23,12 @@ docker run                                                  \
 
 ## Extra tips
 
-As you work with this dockerized utility, you will find that it always tries to
-spawn a daemon in order to save resources on later builds. Because the way this
-container works, Gradle will fail doing this. It won't crash, but it's annoying
-to see the warning message every time.
+### Gradle's cache
 
-In order to disable the daemon spawning step, you can modify the command to
-something like this (notice the difference in the last line):
+In order to use the Gradle's cache, you can also mount a specific volume with
+the option `-v volume_name:/home/apprunner/.gradle`.
 
-```bash
-docker run                                                  \
-       --rm                                                 \
-       -it                                                  \
-       -v /home/user/sourcedir/:/home/apprunner/playground  \
-       -e HOST_USER_ID=$(id -u)                             \
-       -e HOST_GROUP_ID=$(id -g)                            \
-       adsmurai/gradle:4.4-jdk8                             \
-       gradle -Dorg.gradle.daemon=false build
-```
+We recommend to **NOT** mapping the equivalent directory inside the host
+(`-v /home/host_username/.gradle:/home/apprunner/.gradle`) because the custom
+entry point of this image explicitly disables the Gradle's daemon modifying
+the settings files inside this directory.
