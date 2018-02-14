@@ -6,6 +6,10 @@
 # be mapped as an external volume when we want to make use of gradle's cache.                                          #
 ########################################################################################################################
 if [[ ! -f "${GRADLE_USER_HOME}/gradle.properties" ]]; then
+    if [[ -d "${GRADLE_USER_HOME}" ]]; then
+        mkdir -p "${GRADLE_USER_HOME}"                                                                                 ;
+    fi
+
     echo "org.gradle.daemon=false" > /home/apprunner/.gradle/gradle.properties                                         ;
 fi
 
