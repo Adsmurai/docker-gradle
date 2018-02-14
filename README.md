@@ -20,7 +20,6 @@ docker run                                                  \
        --rm                                                 \
        -it                                                  \
        -v "${HOME}:/user"                                   \
-       -v gradle_cache:/user/.gradle                        \
        -v /home/user/sourcedir/:/app                        \
        -u "$(id -u):$(id -g)"                               \
        adsmurai/gradle:4.5-jdk8                             \
@@ -40,10 +39,6 @@ docker run                                                  \
        adsmurai/gradle:4.4-jdk8                             \
        gradle build
 ```
-
-## Extra tips
-
-### Gradle's cache
 
 In order to use the Gradle's cache, you can mount a specific volume with the
 option `-v volume_name:/user/.gradle`.

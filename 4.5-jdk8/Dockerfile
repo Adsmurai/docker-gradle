@@ -12,7 +12,7 @@ FROM openjdk:8-jdk-alpine
 LABEL maintainer "Andrés Correa Casablanca <andreu@adsmurai.com>"
 
 ENV HOME /user
-ENV GRADLE_USER_HOME /user/.gradle
+ENV GRADLE_USER_HOME /user/.murri/gradle
 ENV GRADLE_HOME /opt/gradle
 ENV GRADLE_VERSION 4.5.1
 
