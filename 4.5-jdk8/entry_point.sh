@@ -10,7 +10,7 @@ if [[ ! -f "${GRADLE_USER_HOME}/gradle.properties" ]]; then
         mkdir -p "${GRADLE_USER_HOME}"                                                                                 ;
     fi
 
-    echo "org.gradle.daemon=false" > /home/apprunner/.gradle/gradle.properties                                         ;
+    echo "org.gradle.daemon=false" > "${GRADLE_USER_HOME}/gradle.properties"                                           ;
 fi
 
 $@ ;
