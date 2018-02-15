@@ -51,7 +51,6 @@ RUN set -o errexit -o nounset                                                   
     && echo "Cleaning APK cache"                                                                                       \
     && apk del .build-deps
 
-VOLUME /user/.gradle
 WORKDIR /app
 
 COPY entry_point.sh /usr/local/bin/entry_point.sh
